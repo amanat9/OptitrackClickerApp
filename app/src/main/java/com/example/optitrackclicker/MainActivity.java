@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.text.format.Time;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewConfiguration;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -28,8 +30,56 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClick(View view)
     {
-        today.setToNow();
-        database.getReference("ButtonInput").child("" + today.toMillis(true)).setValue("pressed"+count);
-        count++;
+//        today.setToNow();
+//        database.getReference("ButtonInput").child("" + today.toMillis(true)).setValue("pressed"+count);
+//        count++;
     }
+
+
+
+
+
+
+
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        int action = event.getAction();
+        int keyCode = event.getKeyCode();
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_VOLUME_UP:
+                if (action == KeyEvent.ACTION_UP) {
+                    if (event.getEventTime() - event.getDownTime() > ViewConfiguration.getLongPressTimeout()) {
+                        //TODO long click action
+                        database.getReference("ButtonInput").child("" + System.currentTimeMillis()).setValue("pressed"+count);
+                        count++;
+                    } else {
+                        //TODO click action
+                        database.getReference("ButtonInput").child("" + System.currentTimeMillis()).setValue("pressed"+count);
+                        count++;
+                    }
+                }
+                return true;
+            case KeyEvent.KEYCODE_VOLUME_DOWN:
+                if (action == KeyEvent.ACTION_UP) {
+                    if (event.getEventTime() - event.getDownTime() > ViewConfiguration.getLongPressTimeout()) {
+                        //TODO long click action
+                        database.getReference("ButtonInput").child("" + System.currentTimeMillis()).setValue("pressed"+count);
+                        count++;
+                    } else {
+                        //TODO click action
+
+                        database.getReference("ButtonInput").child("" + System.currentTimeMillis()).setValue("pressed"+count);
+                        count++;
+                    }
+                }
+                return true;
+            default:
+                return super.dispatchKeyEvent(event);
+        }
+    }
+
+
+
+
+
 }
